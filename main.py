@@ -68,24 +68,25 @@ def heu(current_cost, neighbor, finalColumn, sizeGoal):
             else:
                 if int(size) != sizeGoal[1][j]:
                     score += 1
-    return (score + current_cost)/4
+    return (score + current_cost) / 4
 
 
 # get column positions according to heuristic of initial state with possible columns
-def getFinalColumn(initialState, goal):
+def startSearch(initialState):
     finalColumnList = [["apple", "orange", "banana"], ["orange", "apple", "banana"], ["banana", "orange", "apple"],
                        ["apple", "banana", "orange"], ["orange", "banana", "apple"], ["banana", "apple", "orange"]]
-    finalColumn = [["apple", "orange", "banana"]]
-    heuristic = float("inf")
+    minPath, minCost = [], float('inf')
     for columns in finalColumnList:
-        value = heu(0, initialState, columns, goal)
-        if value < heuristic:
-            finalColumn = columns
-            heuristic = value
-    return finalColumn
+        path, cost = astar(initialState, columns)
+        if minCost > cost:
+            shortestOrdering = columns
+            minPath = path
+            minCost = cost
+    return minPath, minCost
+
 
 # Define the A* algorithm to solve the problem
-def astar(initial_state):
+def astar(initial_state, columns):
     apple = []
     banana = []
     orange = []
@@ -101,7 +102,7 @@ def astar(initial_state):
                 orange.append(int(size))
     sizeGoal = [sorted(apple), sorted(orange), sorted(banana)]
     # Define the final column
-    finalColumn = getFinalColumn(initial_state, sizeGoal)
+    finalColumn = columns
     closed_states = []
     open_states = heapdict.heapdict()
     open_states[(0, initial_state)] = 0
@@ -146,7 +147,7 @@ def main():
          Fruit("orange_10", 10), Fruit("banana_6", 6), Fruit("apple_7", 7), Fruit("banana_8", 8), Fruit("orange_9", 9)]
     ]
     initial_state = State(initial_array)
-    path, currentCost = astar(initial_state)
+    path, currentCost = startSearch(initial_state)
     if path is not None:
         print("Cost ", currentCost)
         for p in path:
