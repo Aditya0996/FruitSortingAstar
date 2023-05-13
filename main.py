@@ -68,7 +68,7 @@ def heu(current_cost, neighbor, finalColumn, sizeGoal):
             else:
                 if int(size) != sizeGoal[1][j]:
                     score += 1
-    return score + current_cost
+    return (score + current_cost)/4
 
 
 # get column positions according to heuristic of initial state with possible columns
