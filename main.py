@@ -71,10 +71,21 @@ def heu(current_cost, neighbor, finalColumn, sizeGoal):
     return score + current_cost
 
 
+# get column positions according to heuristic of initial state with possible columns
+def getFinalColumn(initialState, goal):
+    finalColumnList = [["apple", "orange", "banana"], ["orange", "apple", "banana"], ["banana", "orange", "apple"],
+                       ["apple", "banana", "orange"], ["orange", "banana", "apple"], ["banana", "apple", "orange"]]
+    finalColumn = [["apple", "orange", "banana"]]
+    heuristic = float("inf")
+    for columns in finalColumnList:
+        value = heu(0, initialState, columns, goal)
+        if value < heuristic:
+            finalColumn = columns
+            heuristic = value
+    return finalColumn
+
 # Define the A* algorithm to solve the problem
 def astar(initial_state):
-    # Define the final column
-    finalColumn = ["apple", "orange", "banana"]
     apple = []
     banana = []
     orange = []
@@ -89,6 +100,8 @@ def astar(initial_state):
             else:
                 orange.append(int(size))
     sizeGoal = [sorted(apple), sorted(orange), sorted(banana)]
+    # Define the final column
+    finalColumn = getFinalColumn(initial_state, sizeGoal)
     closed_states = []
     open_states = heapdict.heapdict()
     open_states[(0, initial_state)] = 0
