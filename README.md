@@ -1,0 +1,2 @@
+# Fruit Sorting using A* - 
+You are given 10 apples of different sizes, 10 bananas of different sizes and 10 oranges of different sizes, organized in a 3x10 array.  You want to organize them so that fruits go from top to bottom in ascending order of size.  Any fruit can be used in any column that you like.  The only move allowed is to swap two fruits horizontally or vertically.  You want to use A* algorithm to minimize the number of moves for this
