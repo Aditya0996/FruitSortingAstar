@@ -44,7 +44,7 @@ class State:
         for i in range(3):
             fruit_type = self.array[i][0].name.split("_")[0]
             for j in range(len(self.array[0])):
-                if (j < 4 and self.array[i][j].size > self.array[i][j + 1].size) or self.array[i][j].name.split("_")[
+                if (j < 9 and self.array[i][j].size > self.array[i][j + 1].size) or self.array[i][j].name.split("_")[
                     0] != fruit_type:
                     return False
         return True
@@ -104,7 +104,7 @@ def astar(initial_state):
                 path.append(current_state.array)
                 current_state = current_state.parent
             path.reverse()
-            return path
+            return path, current_cost
         # Add the current state to the closed_states set
         visitedArray = current_state.array
         closed_states.append(visitedArray)
@@ -117,7 +117,7 @@ def astar(initial_state):
                 open_states[(current_cost + 1, neighbor)] = heuristic
 
     # Return None if the goal state is not reachable
-    return None
+    return None, None
 
 
 def main():
@@ -133,8 +133,9 @@ def main():
          Fruit("orange_10", 10), Fruit("banana_6", 6), Fruit("apple_7", 7), Fruit("banana_8", 8), Fruit("orange_9", 9)]
     ]
     initial_state = State(initial_array)
-    path = astar(initial_state)
+    path, currentCost = astar(initial_state)
     if path is not None:
+        print("Cost ", currentCost)
         for p in path:
             print(p)
     else:
