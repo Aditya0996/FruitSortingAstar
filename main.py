@@ -44,8 +44,8 @@ class State:
         for i in range(3):
             fruit_type = self.array[i][0].name.split("_")[0]
             for j in range(len(self.array[0])):
-                if (j < 9 and self.array[i][j].size > self.array[i][j + 1].size) or self.array[i][j].name.split("_")[
-                    0] != fruit_type:
+                if (j < 9 and int(self.array[i][j].size) > int(self.array[i][j + 1].size)) or \
+                        self.array[i][j].name.split("_")[0] != fruit_type:
                     return False
         return True
 
